@@ -7,25 +7,22 @@ class Validiation {
         this.low = this.data.toLowerCase();
         this.str = this.low.split("\n");
         this.collect = {};
-        this.stringname;
+        this.stringname = [];
         this.splitdata = [];
     }
     callAllfn() {
         this.loopForindex();
         this.nameValid();
         console.log(this.collect);
+        return this.collect;
     }
     loopForindex() {
         for (let i in this.str) {
-            
-            // console.log(this.str[i]);
-            // console.log(".................");
             this.webValid(this.str[i]);
             this.mailValid(this.str[i]);
             this.splitSpace(this.str[i]);
             this.numberValid(this.str[i]);
-            // this.findGetclose();
-            
+
         }
     }
     differCheck(val1, val2) {
@@ -37,10 +34,9 @@ class Validiation {
     }
     splitSpace(word) {
         var test = word.split(" ");
-        for (let i in test){
+        for (let i in test) {
             this.splitdata.push(test[i]);
         }
-        // console.log(this.splitdata);
     }
     predicName() {
         var symbol = /[-_.]/;
@@ -49,24 +45,41 @@ class Validiation {
             str = this.collect.email.split("@");
             if (symbol.exec(str[0]) != null) {
                 this.stringname = str[0].split(symbol.exec(str[0]));
+            } else {
+                console.log("เข้าเงื่อนไขนี้");
+                this.stringname = str[0];
             }
         }
     }
     nameValid() {
-        var data = []
-        console.log(this.splitdata);
+        var data = [];
         this.predicName();
-        if (this.stringname != null && this.splitdata != null) {
+
+        if (this.stringname != null && this.stringname.length <= 2 && this.splitdata != null) {
             for (let i in this.stringname) {
                 for (let k in this.splitdata) {
-                    if (this.differCheck(this.stringname[i], this.splitdata[k]) > 0.4){
-                        data.push(this.splitdata[k]); 
-                        // console.log(this.stringname[i] + "-----------" + i);
-                        // console.log(this.splitdata[k] + "-----------" + k);
+                    if (this.differCheck(this.stringname[i], this.splitdata[k]) > 0.4) {
+                        data.push(this.splitdata[k]);
+                        // console.log(this.splitdata[k]);
                     }
                 }
             }
+            console.log(data);
             this.collect.name = data[0] + " " + data[1];
+        } else if (this.stringname != null && this.stringname.length > 2 && this.splitdata != null) {
+            for (let k in this.splitdata) {
+                console.log(this.splitdata[k]);
+                if (this.differCheck(this.stringname, this.splitdata[k]) > 0.4) {
+                    data.push(this.splitdata[k]);
+                    console.log(this.splitdata[k]);
+                    // if (this.stringname.length == 1) {
+                    //     this.collect.name = data[0];
+                    // } else {
+                    //     this.collect.name = data[0] + " " + data[1];
+                    // }
+                }
+            }
+            this.collect.name = data[0];
         }
     }
     mailValid(word) {
@@ -77,12 +90,6 @@ class Validiation {
         // var mailformat = /^(([^<>()[]\.,;:s@"]+(.[^<>()[]\.,;:s@"]+)*)|(".+"))@(([[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}])|(([a-zA-Z-0-9]+.)+[a-zA-Z]{2,}))$/;
         if (word.match(mailformat)) {
             this.collect.email = word;
-            // if (this.collect.email != null) {
-            //     splstr = this.collect.email.split("@");
-            //     if (symbol.exec(splstr[0]) != null) {
-            //         this.stringname = splstr[0].split(symbol.exec(splstr[0]));
-            //     }
-            // }
         }
 
 
@@ -96,12 +103,12 @@ class Validiation {
     }
     numberValid(word) {
         var formatnumber = /[+]?[\s./0-9]*[(]?[0-9]{1,4}[)]?[-\s./0-9]*/g;
+        // var formatnumber = /^(([\+]{1}[0-9]{1,3}[\ ]{1}[0-9]{1,2}[\ ]{1}[0-9]{4}[\ ]{1}[0-9]{4})|([0]{1}[0-9]{1}[\ ]{1}[0-9]{4}[\ ]{1}[0-9]{4})|([0]{1}[0-9]{1}[\-]{1}[0-9]{4}[\-]{1}[0-9]{4})|([\(]{1}[0]{1}[0-9]{1}[\)]{1}[\ ]{1}[0-9]{4}([\ ]|[\-]){1}[0-9]{4})|([0-9]{4}([\ ]|[\-])?[0-9]{4})|([0]{1}[0-9]{3}[\ ]{1}[0-9]{3}[\ ]{1}[0-9]{3})|([0]{1}[0-9]{9})|([\(]{1}[0-9]{3}[\)]{1}[\ ]{1}[0-9]{3}[\-]{1}[0-9]{4})|([0-9]{3}([\/]|[\-]){1}[0-9]{3}[\-]{1}[0-9]{4})|([1]{1}[\-]?[0-9]{3}([\/]|[\-]){1}[0-9]{3}[\-]{1}[0-9]{4})|([1]{1}[0-9]{9}[0-9]?)|([0-9]{3}[\.]{1}[0-9]{3}[\.]{1}[0-9]{4})|([\(]{1}[0-9]{3}[\)]{1}[0-9]{3}([\.]|[\-]){1}[0-9]{4}(([\ ]?(x|ext|extension)?)([\ ]?[0-9]{3,4}))?)|([1]{1}[\(]{1}[0-9]{3}[\)]{1}[0-9]{3}([\-]){1}[0-9]{4})|([\+]{1}[1]{1}[\ ]{1}[0-9]{3}[\.]{1}[0-9]{3}[\-]{1}[0-9]{4})|([\+]{1}[1]{1}[\ ]?[\(]{1}[0-9]{3}[\)]{1}[0-9]{3}[\-]{1}[0-9]{4}))$/g;
         var predicphone = /(tel|t\B\b|Tel|TEL|T\B\b)+/g;
         var mainpre = /(off|office|OFFICE|Office|O\B\b|o\B\b)+/g;
         var directpre = /(Direct|Dir|Direct Dial|Dial|Main|D\B\b|toll free|direct|Phone)+/g;
         var faxpre = /(Fax|F\B\b|fax|f\B\b)+/g;
         var onlyno = formatnumber.exec(word);
-        // console.log(onlyno);
         if (word.match(predicphone) || word.match(mainpre)) {
             if (onlyno != null) {
                 this.collect.phone = onlyno[0];
@@ -113,6 +120,10 @@ class Validiation {
         } else if (word.match(faxpre)) {
             if (onlyno != null) {
                 this.collect.fax = onlyno[0];
+            }
+        } else if (word.match(formatnumber)) {
+            if (onlyno[0].length > 5) {
+                this.collect.phone = onlyno[0];
             }
         }
     }

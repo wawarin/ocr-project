@@ -27,17 +27,6 @@ var upload = multer({
     }
   }
 });
-function ValidateEmail(text) {
-  var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-  if (text.match(mailformat)) {
-    console.log(text);
-    return true;
-  }
-  else {
-    console.log("You have entered an invalid email address!");
-    return false;
-  }
-};
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
@@ -46,7 +35,6 @@ router.get('/', function (req, res, next) {
 });
 
 router.post('/test', upload.single("image"), function (req, res, next) {
-  // console.log(req.file);
   var image = "./public/images/" + req.file.originalname;
   console.log(image);
   const worker = createWorker({
@@ -59,17 +47,13 @@ router.post('/test', upload.single("image"), function (req, res, next) {
     await worker.initialize('eng+tha');
     const { data: { text } } = await worker.recognize(image);
     console.log(text);
-    var str = text.split("\n");
     console.log(text.split("\n"));
-    // console.log(typeof str);
-    // console.log(str.length);
-    // console.log(extract.ext(text));
     let valid = new extract.ext(text);
     valid.callAllfn();
 
     await worker.terminate();
   })();
-  res.json({ message: "Upload Succesful!!" });
+  res.json({ data: valid.callAllfn()});
 });
 
 
