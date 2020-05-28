@@ -1,7 +1,7 @@
 /*  ==========================================
     SHOW UPLOADED IMAGE
 * ========================================== */
-
+$('#showdata').hide();
 function readURL(input) {
   if (input.files && input.files[0]) {
     var reader = new FileReader();
@@ -14,9 +14,11 @@ function readURL(input) {
   }
 }
 
+
 $(function () {
   $('#upload').on('change', function () {
     readURL(input);
+    $('#showdata').show();
   });
 });
 
@@ -28,18 +30,6 @@ var infoArea = document.getElementById('upload-label');
 
 input.addEventListener('change', showFileName);
 
-function extraction(text) {
-  var str = text.split("\n");
-  console.log(str);
-  var i;
-
-  for (i = 0; i < str.length; i++) {
-    console.log(i);
-    if (i == 1) {
-      console.log(i);
-    }
-  }
-}
 
 function showFileName(event) {
 

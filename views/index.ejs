@@ -50,10 +50,33 @@
 
 
                 <!-- Uploaded image area-->
-                <p class="font-italic text-white text-center">The image uploaded will be rendered inside the box below.
+                <p class="font-italic text-white text-center">The image and information uploaded will be rendered inside
+                    the box below.
                 </p>
                 <div class="image-area mt-4"><img id="imageResult" src="#" alt=""
-                        class="img-fluid rounded shadow-sm mx-auto d-block"></div>
+                        class="img-fluid rounded shadow-sm mx-auto d-block">
+                </div>
+                <div id="showdata">
+
+                    <legend>data</legend>
+                    <label for="fname">Name:</label><br>
+                    <input type="text" id="fname" name="fname" value=x><br>
+                    <label for="lname">Surname:</label><br>
+                    <input type="text" id="lname" name="lname" value=y><br><br>
+                    <label for="lname">Number:</label><br>
+                    <input type="text" id="num" name="number" value=y><br><br>
+                    <label for="lname">Address:</label><br>
+                    <input type="text" id="add" name="address" value=y><br><br>
+                    <label for="lname">Email:</label><br>
+                    <input type="text" id="mail" name="email" value=y><br><br>
+                    <label for="lname">Other:</label><br>
+                    <input type="text" id="oth" name="other" value=y><br><br>
+                    <input type="submit" value="Submit">
+
+                </div>
+                <!-- <div id = "popup" class="popup" onclick="myFunction()">Click me to toggle the popup!
+                    <span class="popuptext" id="myPopup">A Simple Popup!</span>
+                </div> -->
 
             </div>
         </div>
@@ -63,11 +86,16 @@
         integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
         integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
-    </script>
+        </script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
         integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous">
-    </script>
+        </script>
     <script src="/javascripts/preview-pic.js"></script>
+    <script src="/javascripts/preview-text.js"></script>
+    <!-- <script>function myFunction() {
+        var popup = document.getElementById("myPopup");
+        popup.classList.toggle("show");
+      }</script>  -->
 </body>
 
 </html>

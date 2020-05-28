@@ -1,11 +1,14 @@
-var express = require('express');
-var router = express.Router();
-var multer = require('multer');
+let express = require('express');
+let router = express.Router();
+let multer = require('multer');
+const createmodel = require("../utility/model.js");
+const connect_db = require("../utility/db.js");
 const extract = require("../utility/extrac-text.js");
+const previewtext = require("../public/javascripts/preview-text.js")
 const { createWorker } = require('tesseract.js');
 
 
-var diskstorage = multer.diskStorage({
+let diskstorage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, "./public/images"); // here we specify the destination . in this case i specified the current directory
   },
@@ -15,7 +18,7 @@ var diskstorage = multer.diskStorage({
   },
 });
 
-var upload = multer({
+let upload = multer({
   storage: diskstorage,
   /*File Filter*/
   fileFilter: (req, file, cb) => { // มีบัคที่ไฟล์ tiff ไม่แสดงหน้าเว็ป
@@ -30,12 +33,13 @@ var upload = multer({
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
+  // connect_db;  
   res.render('index');
 
 });
 
 router.post('/test', upload.single("image"), function (req, res, next) {
-  var image = "./public/images/" + req.file.originalname;
+  let image = "./public/images/" + req.file.originalname;
   console.log(image);
   const worker = createWorker({
     logger: m => console.log(m), // Add logger here
@@ -49,11 +53,12 @@ router.post('/test', upload.single("image"), function (req, res, next) {
     console.log(text);
     console.log(text.split("\n"));
     let valid = new extract.ext(text);
-    valid.callAllfn();
-
+    // let analysdata = valid.callAllfn();
+    console.log(valid.callAllfn());
+    previewtext.previewdata(valid.callAllfn());
     await worker.terminate();
   })();
-  res.json({ data: valid.callAllfn()});
+  res.json({ message: "Upload Complete!!!"});
 });
 
 
