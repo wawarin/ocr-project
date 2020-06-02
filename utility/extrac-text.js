@@ -13,7 +13,11 @@ class Validiation {
     callAllfn() {
         this.loopForindex();
         this.nameValid();
+        if (this.splitdata != null){
+            this.collect.alldata =  this.data.split("\n");
+        }
         return this.collect;
+        
     }
     loopForindex() {
         for (let i in this.str) {
@@ -48,33 +52,32 @@ class Validiation {
                 this.stringname = str[0];
             }
         }
-        else {
-            return false
-        }
+        //  else {
+        //     console.log("No email for find name!!");
+        // }
     }
     nameValid() {
         let data = [];
-        if (this.predicName()) {
-            if (this.stringname != null && this.stringname.length <= 2 && this.splitdata != null) {
-                for (let k in this.splitdata) {
-                    for (let i in this.stringname) {
-                        if (this.differCheck(this.stringname[i], this.splitdata[k]) > 0.4) {
-                            data.push(this.splitdata[k]);
-                        }
-                    }
-                }
-                this.collect.name = data[0] + " " + data[1];
-            } else if (this.stringname != null && this.stringname.length > 2 && this.splitdata != null) {
-                for (let k in this.splitdata) {
-                    if (this.differCheck(this.stringname, this.splitdata[k]) > 0.4) {
+        this.predicName();
+        // if (this.predicName()) {
+        if (this.stringname != null && this.stringname.length <= 2 && this.splitdata != null) {
+            for (let k in this.splitdata) {
+                for (let i in this.stringname) {
+                    if (this.differCheck(this.stringname[i], this.splitdata[k]) > 0.4) {
                         data.push(this.splitdata[k]);
                     }
                 }
-                this.collect.name = data[0];
             }
-        } else {
-            console.log("No email for find name!!");
+            this.collect.name = data[0] + " " + data[1];
+        } else if (this.stringname != null && this.stringname.length > 2 && this.splitdata != null) {
+            for (let k in this.splitdata) {
+                if (this.differCheck(this.stringname, this.splitdata[k]) > 0.4) {
+                    data.push(this.splitdata[k]);
+                }
+            }
+            this.collect.name = data[0];
         }
+        // }
     }
     mailValid(word) {
         // let mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;

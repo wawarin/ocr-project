@@ -5,7 +5,6 @@ const mongoDB = 'mongodb+srv://admin:admin556@cluster0-thyaj.mongodb.net/test?re
 class Database {
     constructor(){
         this._connect()
-        // this._schema()
     }
 
     _connect(){

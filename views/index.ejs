@@ -56,22 +56,39 @@
                 <div class="image-area mt-4"><img id="imageResult" src="#" alt=""
                         class="img-fluid rounded shadow-sm mx-auto d-block">
                 </div>
+                <!-- <div id="load" class="spinner-grow" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div> -->
+
+                <div id="load" class="d-flex justify-content-center">
+                    <div id="obj" class="spinner-border" role="status">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                </div>
+
                 <div id="showdata">
 
-                    <legend>data</legend>
+                    <p id="alldata" class="font-italic text-white text-center"></p>
                     <label for="fname">Name:</label><br>
-                    <input type="text" id="fname" name="fname" value=x><br>
+                    <input type="text" id="fname" name="fname" value="This is Name input"><br>
+                    
                     <label for="lname">Surname:</label><br>
-                    <input type="text" id="lname" name="lname" value=y><br><br>
-                    <label for="lname">Number:</label><br>
-                    <input type="text" id="num" name="number" value=y><br><br>
-                    <label for="lname">Address:</label><br>
-                    <input type="text" id="add" name="address" value=y><br><br>
-                    <label for="lname">Email:</label><br>
-                    <input type="text" id="mail" name="email" value=y><br><br>
-                    <label for="lname">Other:</label><br>
-                    <input type="text" id="oth" name="other" value=y><br><br>
-                    <input type="submit" value="Submit">
+                    <input type="text" id="lname" name="lname" value="This is Lastname input"><br><br>
+                    
+                    <label for="Number">Number:</label><br>
+                    <input type="text" id="num" name="number" value="This is Phone number input"><br><br>
+                    
+                    <label for="Address">Address:</label><br>
+                    <input type="text" id="add" name="address" value="This is Address input"><br><br>
+                    
+                    <label for="Email">Email:</label><br>
+                    <input type="text" id="mail" name="email" value="This is Mail input"><br><br>
+                    
+                    <label for="Other">Other:</label><br>
+                    <input type="text" id="oth" name="other" value="This is Other input"><br><br>
+                    
+                    <input id='submit' class="btn btn-primary" type="submit" value="Submit">
+                    <input id='subandsend' class="btn btn-primary" type="saveandsend" value="Submit & Send">
 
                 </div>
                 <!-- <div id = "popup" class="popup" onclick="myFunction()">Click me to toggle the popup!
@@ -90,12 +107,8 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
         integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous">
         </script>
-    <script src="/javascripts/preview-pic.js"></script>
-    <script src="/javascripts/preview-text.js"></script>
-    <!-- <script>function myFunction() {
-        var popup = document.getElementById("myPopup");
-        popup.classList.toggle("show");
-      }</script>  -->
+    <script src="/javascripts/preview-alldata.js"></script>
+    <script src="https://smtpjs.com/v3/smtp.js"></script>
 </body>
 
 </html>

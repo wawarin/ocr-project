@@ -6,15 +6,17 @@ class Model{
     _schema(){
         let schema = new mongoose.Schema({
             Name: String,
+            Lastname: String,
             Number: String,
             Address: String,
-            Email: String,
+            Mail: String,
             Web: String,
             Other: [],
             Date: { type: Date, default: Date.now }
         })
-        const cardmodel = mongoose.model('BusinessCards', schema);
-        return cardmodel;
+        return schema;
+        // const cardmodel = mongoose.model('BusinessCards', schema);
+        // return cardmodel;
     }
     // matchdata(data){
     //     if (data != null) {
