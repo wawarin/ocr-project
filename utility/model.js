@@ -6,7 +6,7 @@ class Model{
     _schema(){
         let schema = new mongoose.Schema({
             Name: String,
-            Lastname: String,
+            // Lastname: String,
             Number: String,
             Address: String,
             Mail: String,

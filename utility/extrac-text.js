@@ -16,6 +16,7 @@ class Validiation {
         if (this.splitdata != null){
             this.collect.alldata =  this.data.split("\n");
         }
+        this.collect.ogdata = this.data;
         return this.collect;
         
     }

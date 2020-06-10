@@ -2,7 +2,7 @@
     SHOW UPLOADED IMAGE
 * ========================================== */
 
-$('#showdata').hide();
+// $('#showdata').hide();
 $('#obj').hide();
 $('#load').hide();
 
@@ -32,13 +32,13 @@ function previewData(data) {
         }
 
       }
-      else if ([key] == "lastname") {
-        if ([value] != null) {
-          $('#lname').prop('value', [value]);
-        } else {
-          $('#lname').prop('value', 'please select or typing Last name');
-        }
-      }
+      // else if ([key] == "lastname") {
+      //   if ([value] != null) {
+      //     $('#lname').prop('value', [value]);
+      //   } else {
+      //     $('#lname').prop('value', 'please select or typing Last name');
+      //   }
+      // }
       else if ([key] == "number") {
         if ([value] != null) {
           $('#num').prop('value', [value]);
@@ -149,14 +149,14 @@ class madeData {
       this.data.Name = null;
     }
   }
-  _lastnameData() {
-    let lname = $('#lname').val();
-    if (lname != "") {
-      this.data.Lastname = lname;
-    } else if (lname == "") {
-      this.data.Lastname = null;
-    }
-  }
+  // _lastnameData() {
+  //   let lname = $('#lname').val();
+  //   if (lname != "") {
+  //     this.data.Lastname = lname;
+  //   } else if (lname == "") {
+  //     this.data.Lastname = null;
+  //   }
+  // }
   _numberData() {
     let number = $('#num').val();
     if (number != null) {
@@ -182,6 +182,8 @@ class madeData {
     }
   }
   _otherData() {
+    // let alldata = $('#alldata').val();
+    // let allsplit = alldata.split(" ");
     let oth = $('#oth').val();
     if (oth != null) {
       this.data.Other = oth;
@@ -240,7 +242,7 @@ $('#subandsend').click(function () {
     success: function () {
       // console.log(data);
       emailSent(data._returnData());
-      alert(data._returnData());
+      // alert(data._returnData());
     },
     error: function (err) {
       console.log('error: ', err);
@@ -250,15 +252,39 @@ $('#subandsend').click(function () {
 
 function emailSent(data) {
   if (data.Mail != null) {
-    Email.send({
-      SecureToken: "4d812d49-2fd5-46b4-b4fd-81f7c2b6a42a",
-      To: data.Mail,
-      From: "s5901012630121@email.kmutnb.ac.th",
-      Subject: "This is the subject",
-      Body: "And this is the body"
-    }).then(function (message) {
-      alert("Mail sent successfully!!")
-    });
+    if (data.Name != null && data.Lastname != null) {
+      Email.send({
+        SecureToken: "4d812d49-2fd5-46b4-b4fd-81f7c2b6a42a",
+        To: data.Mail,
+        From: "s5901012630121@email.kmutnb.ac.th",
+        Subject: "Dear " + data.Name + " " + data.Lastname,
+        Body: "Following your contact, it is with great delight that we can work in cooperation with you. We are looking forward to carrying out bussiness together with you."
+      }).then(function (message) {
+        alert("Mail sent successfully!!")
+      });
+    }
+    else if (data.Name != null){
+      Email.send({
+        SecureToken: "4d812d49-2fd5-46b4-b4fd-81f7c2b6a42a",
+        To: data.Mail,
+        From: "s5901012630121@email.kmutnb.ac.th",
+        Subject: "Dear " + data.Name,
+        Body: "Following your contact, it is with great delight that we can work in cooperation with you. We are looking forward to carrying out bussiness together with you."
+      }).then(function (message) {
+        alert("Mail sent successfully!!")
+      });
+    }
+    else {
+      Email.send({
+        SecureToken: "4d812d49-2fd5-46b4-b4fd-81f7c2b6a42a",
+        To: data.Mail,
+        From: "s5901012630121@email.kmutnb.ac.th",
+        Subject: "Hi ",
+        Body: "Following your contact, it is with great delight that we can work in cooperation with you. We are looking forward to carrying out bussiness together with you."
+      }).then(function (message) {
+        alert("Mail sent successfully!!")
+      });
+    }
   }
 }
 

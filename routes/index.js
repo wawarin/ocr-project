@@ -51,7 +51,7 @@ router.post('/test', upload.single("image"), function (req, res, next) {
     await worker.loadLanguage('eng+tha');
     await worker.initialize('eng+tha');
     const { data: { text } } = await worker.recognize(image);
-    // console.log(text);
+    console.log(text);
     // console.log(text.split("\n"));
     let valid = new extract.ext(text);
     console.log(valid.callAllfn());

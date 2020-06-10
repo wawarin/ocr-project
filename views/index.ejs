@@ -6,6 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>OCR Testing</title>
 
+    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous"> -->
+
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
         integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="stylesheet" href="/stylesheets/style.css" />
@@ -66,35 +69,101 @@
                     </div>
                 </div>
 
-                <div id="showdata">
 
-                    <p id="alldata" class="font-italic text-white text-center"></p>
-                    <label for="fname">Name:</label><br>
-                    <input type="text" id="fname" name="fname" value="This is Name input"><br>
-                    
-                    <label for="lname">Surname:</label><br>
-                    <input type="text" id="lname" name="lname" value="This is Lastname input"><br><br>
-                    
-                    <label for="Number">Number:</label><br>
-                    <input type="text" id="num" name="number" value="This is Phone number input"><br><br>
-                    
-                    <label for="Address">Address:</label><br>
-                    <input type="text" id="add" name="address" value="This is Address input"><br><br>
-                    
-                    <label for="Email">Email:</label><br>
-                    <input type="text" id="mail" name="email" value="This is Mail input"><br><br>
-                    
-                    <label for="Other">Other:</label><br>
-                    <input type="text" id="oth" name="other" value="This is Other input"><br><br>
-                    
-                    <input id='submit' class="btn btn-primary" type="submit" value="Submit">
-                    <input id='subandsend' class="btn btn-primary" type="saveandsend" value="Submit & Send">
+                <p id="alldata" class="font-italic text-white text-center"></p>
 
-                </div>
+
                 <!-- <div id = "popup" class="popup" onclick="myFunction()">Click me to toggle the popup!
                     <span class="popuptext" id="myPopup">A Simple Popup!</span>
                 </div> -->
 
+            </div>
+
+        </div>
+        <div class="row py-2">
+            <div id="showdata" class="col-lg-6 mx-auto">
+
+
+                <label for="fname">Name:</label>
+                <input type="text" id="fname" name="fname">
+                <input id='sub_name' class="btn btn-success" type="submit" value="Submit">
+                <input id='cl_name' class="btn btn-secondary" type="submit" value="Clear">
+                <br><br>
+
+                <!-- <label for="lname">Surname:</label>
+                <input type="text" id="lname" name="lname">
+                <input id='sub_lname' class="btn btn-success" type="submit" value="Submit">
+                <input id='cl_lname' class="btn btn-secondary" type="submit" value="Clear">
+                <br><br> -->
+
+                <label for="Number">Number:</label>
+                <input type="text" id="num" name="number">
+                <input id='sub_num' class="btn btn-success" type="submit" value="Submit">
+                <input id='cl_num' class="btn btn-secondary" type="submit" value="Clear">
+                <br><br>
+
+                <label for="Address">Address:</label>
+                <input type="text" id="add" name="address">
+                <input id='sub_addr' class="btn btn-success" type="submit" value="Submit">
+                <input id='cl_addr' class="btn btn-secondary" type="submit" value="Clear">
+                <br><br>
+
+                <label for="Email">Email:</label>
+                <input type="text" id="mail" name="email">
+                <input id='sub_mail' class="btn btn-success" type="submit" value="Submit">
+                <input id='cl_mail' class="btn btn-secondary" type="submit" value="Clear">
+                <br><br>
+
+                <label for="Other">Other:</label>
+                <input type="text" id="oth" name="other">
+                <input id='sub_oth' class="btn btn-success" type="submit" value="Submit">
+                <input id='cl_oth' class="btn btn-secondary" type="submit" value="Clear">
+                <br><br>
+
+                <input id='submit' class="btn btn-primary" type="submit" value="Submit">
+                <input id='subandsend' class="btn btn-primary" type="saveandsend" value="Submit & Send">
+
+            </div>
+            <div id="table" class="col-lg-6 mx-auto">
+                <table class="table table-striped table-bordered" id='textdata'>
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Text</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" id="check1">
+                                    <label class="custom-control-label" for="check1">1</label>
+                                </div>
+                            </th>
+                            <td>Mark</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" id="check2">
+                                    <label class="custom-control-label" for="check2">2</label>
+                                </div>
+                            </th>
+                            <td>Jacob</td>
+                        
+                        </tr>
+                        <tr>
+                            <th scope="row">
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" id="check3">
+                                    <label class="custom-control-label" for="check3">3</label>
+                                </div>
+                            </th>
+                            <td>Larry</td>
+                           
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
@@ -107,8 +176,11 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
         integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous">
         </script>
+
     <script src="/javascripts/preview-alldata.js"></script>
     <script src="https://smtpjs.com/v3/smtp.js"></script>
+
+
 </body>
 
 </html>
