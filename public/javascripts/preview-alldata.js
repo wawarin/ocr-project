@@ -1,8 +1,8 @@
 /*  ==========================================
     SHOW UPLOADED IMAGE
 * ========================================== */
-
-// $('#showdata').hide();
+$('table').hide();
+$('#showdata').hide();
 $('#obj').hide();
 $('#load').hide();
 
@@ -17,9 +17,7 @@ function readURL(input) {
     reader.readAsDataURL(input.files[0]);
   }
 }
-function resetData() {
-  $
-}
+
 function previewData(data) {
   if (data != null) {
     for (let [key, value] of Object.entries(data)) {
@@ -28,17 +26,10 @@ function previewData(data) {
         if ([value] != 'undefined undefined') {
           $('#fname').prop('value', [value]);
         } else {
-          $('#fname').prop('value', "please select or typing First name");
+          $('#fname').prop('value', "please select or typing Name");
         }
 
       }
-      // else if ([key] == "lastname") {
-      //   if ([value] != null) {
-      //     $('#lname').prop('value', [value]);
-      //   } else {
-      //     $('#lname').prop('value', 'please select or typing Last name');
-      //   }
-      // }
       else if ([key] == "number") {
         if ([value] != null) {
           $('#num').prop('value', [value]);
@@ -70,23 +61,112 @@ function previewData(data) {
       else if ([key] == "alldata" && [value] != null) {
         let str_one = ""
         for (let i in [value]) {
-          str_one = [value][i] + " ";
+          str_one += [value][i] + " ";
         }
         $('#alldata').text(str_one);
       }
+      else if ([key] == "ogdata" && [value] != null) {
+        let table = new taBle([value][0]);
+        console.log(table);
+      }
     }
   }
+  $('table').show();
   $('#showdata').show();
   $('#obj').hide();
   $('#load').hide();
 }
 
+
+class taBle {
+  constructor(data) {
+    this.test = data.split("\n");
+    this.collectdata = [];
+    this._tableData(this.test);
+    // console.log(this.collectdata);
+    this._filterData();
+    this._putData();
+    // this._insertDatatoInput();
+  }
+  _tableData(data) {
+    for (let i in data) {
+      this._findnumber(data[i]);
+      if (data[i].split(" ").length == 1) {
+        this.collectdata.push(data[i]);
+      }
+    }
+  }
+
+  _findnumber(word) {
+    let formatnumber = /[+]?[\s./0-9]*[(]?[0-9]{1,4}[)]?[-\s./0-9]*/g;
+    // let formatnumber = /^(([\+]{1}[0-9]{1,3}[\ ]{1}[0-9]{1,2}[\ ]{1}[0-9]{4}[\ ]{1}[0-9]{4})|([0]{1}[0-9]{1}[\ ]{1}[0-9]{4}[\ ]{1}[0-9]{4})|([0]{1}[0-9]{1}[\-]{1}[0-9]{4}[\-]{1}[0-9]{4})|([\(]{1}[0]{1}[0-9]{1}[\)]{1}[\ ]{1}[0-9]{4}([\ ]|[\-]){1}[0-9]{4})|([0-9]{4}([\ ]|[\-])?[0-9]{4})|([0]{1}[0-9]{3}[\ ]{1}[0-9]{3}[\ ]{1}[0-9]{3})|([0]{1}[0-9]{9})|([\(]{1}[0-9]{3}[\)]{1}[\ ]{1}[0-9]{3}[\-]{1}[0-9]{4})|([0-9]{3}([\/]|[\-]){1}[0-9]{3}[\-]{1}[0-9]{4})|([1]{1}[\-]?[0-9]{3}([\/]|[\-]){1}[0-9]{3}[\-]{1}[0-9]{4})|([1]{1}[0-9]{9}[0-9]?)|([0-9]{3}[\.]{1}[0-9]{3}[\.]{1}[0-9]{4})|([\(]{1}[0-9]{3}[\)]{1}[0-9]{3}([\.]|[\-]){1}[0-9]{4}(([\ ]?(x|ext|extension)?)([\ ]?[0-9]{3,4}))?)|([1]{1}[\(]{1}[0-9]{3}[\)]{1}[0-9]{3}([\-]){1}[0-9]{4})|([\+]{1}[1]{1}[\ ]{1}[0-9]{3}[\.]{1}[0-9]{3}[\-]{1}[0-9]{4})|([\+]{1}[1]{1}[\ ]?[\(]{1}[0-9]{3}[\)]{1}[0-9]{3}[\-]{1}[0-9]{4}))$/g;
+    let predicphone = /(tel|t\B\b|Tel|TEL|T\B\b)+/g;
+    let mainpre = /(off|office|OFFICE|Office|O\B\b|o\B\b)+/g;
+    let directpre = /(Direct|Dir|Direct Dial|Dial|Main|D\B\b|toll free|direct|Phone)+/g;
+    let faxpre = /(Fax|F\B\b|fax|f\B\b)+/g;
+    let onlyno = formatnumber.exec(word);
+    if (word.match(predicphone) || word.match(mainpre) || word.match(directpre) || word.match(faxpre) ||
+      word.match(formatnumber)) {
+      if (onlyno != null && onlyno[0].length >= 9) {
+        this.test = this.test.filter(e => e != word);
+        this.collectdata.push(onlyno[0])
+      }
+    }
+  }
+  _filterData() {
+    let left_spitdata = [];
+    if (this.collectdata != null || this.collectdata != []) {
+      for (let i in this.collectdata) {
+        this.test = this.test.filter(e => e != this.collectdata[i])
+      }
+      for (let k in this.test) {
+        left_spitdata.push(this.test[k].split(" "));
+      }
+      for (let j in left_spitdata) {
+        for (let m in left_spitdata[j]) {
+          this.collectdata.push(left_spitdata[j][m]);
+          this.collectdata = this.collectdata.filter(e => e != "");
+        }
+        // this.test = this.test.filter(e => e != left_spitdata[j]);
+      }
+    }
+  }
+  _putData() {
+    let num = 1;
+    if (this.collectdata != [] || this.collectdata != null) {
+      for (let i in this.collectdata) {
+        $('#tabledata').find('tbody').append(
+          "<tr>" +
+          "<th scope=\"row\">" +
+          "<div class=\"custom-control custom-checkbox\">" +
+          "<input type=\"checkbox\" class=\"custom-control-input\"" + "id=" + "check" + i + ">" +
+          "<label class=\"custom-control-label\"" + "for=" + "check" + i + ">" + num + "</label>" +
+          "</div>" +
+          "</th>" +
+          "<td " + "id= " + "tdid" + i + ">" + this.collectdata[i] + "</td>" +
+          "</tr>"
+        );
+        num = num + 1;
+
+      }
+    }
+  }
+  sendData() {
+    if (this.collectdata != null) {
+      return this.collectdata;
+    }
+  }
+}
+
 $(function () {
   $('#upload').on('change', function () {
+    $('#alldata').hide();
+    $('table').hide();
     $('#showdata').hide();
     $('#load').show();
     $('#obj').show();
     readURL(input);
+    $('#tabledata').find('tbody').empty();
   });
 });
 
@@ -121,18 +201,21 @@ function showFileName(event) {
     contentType: false,
     success: function (data) {
       previewData(data);
-      console.log(data);
+      // tableData();
+      // console.log(data);
     },
     error: function (err) {
       console.log('error: ', err);
     }
   });
 }
+
 class madeData {
   constructor() {
     this.data = {};
     this._nameData();
-    this._lastnameData();
+    this._companyData();
+    this._positionData();
     this._numberData();
     this._addressData();
     this._mailData();
@@ -149,14 +232,22 @@ class madeData {
       this.data.Name = null;
     }
   }
-  // _lastnameData() {
-  //   let lname = $('#lname').val();
-  //   if (lname != "") {
-  //     this.data.Lastname = lname;
-  //   } else if (lname == "") {
-  //     this.data.Lastname = null;
-  //   }
-  // }
+  _companyData() {
+    let comname = $('#coname').val();
+    if (comname != null) {
+      this.data.CompanyName = comname;
+    } else if (name == "") {
+      this.data.CompanyName = null;
+    }
+  }
+  _positionData() {
+    let pos = $('#pos').val();
+    if (pos != null) {
+      this.data.Position = pos;
+    } else if (pos == "") {
+      this.data.Position = null;
+    }
+  }
   _numberData() {
     let number = $('#num').val();
     if (number != null) {
@@ -182,8 +273,6 @@ class madeData {
     }
   }
   _otherData() {
-    // let alldata = $('#alldata').val();
-    // let allsplit = alldata.split(" ");
     let oth = $('#oth').val();
     if (oth != null) {
       this.data.Other = oth;
@@ -192,6 +281,7 @@ class madeData {
     }
   }
 }
+
 $('#submit').click(function () {
 
   let data = new madeData();
@@ -252,39 +342,115 @@ $('#subandsend').click(function () {
 
 function emailSent(data) {
   if (data.Mail != null) {
-    if (data.Name != null && data.Lastname != null) {
-      Email.send({
-        SecureToken: "4d812d49-2fd5-46b4-b4fd-81f7c2b6a42a",
-        To: data.Mail,
-        From: "s5901012630121@email.kmutnb.ac.th",
-        Subject: "Dear " + data.Name + " " + data.Lastname,
-        Body: "Following your contact, it is with great delight that we can work in cooperation with you. We are looking forward to carrying out bussiness together with you."
-      }).then(function (message) {
-        alert("Mail sent successfully!!")
-      });
-    }
-    else if (data.Name != null){
+    if (data.Name != null) {
       Email.send({
         SecureToken: "4d812d49-2fd5-46b4-b4fd-81f7c2b6a42a",
         To: data.Mail,
         From: "s5901012630121@email.kmutnb.ac.th",
         Subject: "Dear " + data.Name,
-        Body: "Following your contact, it is with great delight that we can work in cooperation with you. We are looking forward to carrying out bussiness together with you."
+        Body: "Dear " + data.Name + "\n" + " Following your contact, it is with great delight that we can work in cooperation with you. We are looking forward to carrying out bussiness together with you." + "\n" +  "Yours sincerely" + "\n" + "Warinthorn Rattanakarunjit"
       }).then(function (message) {
         alert("Mail sent successfully!!")
       });
     }
+    // else if (data.Name != null) {
+    //   Email.send({
+    //     SecureToken: "4d812d49-2fd5-46b4-b4fd-81f7c2b6a42a",
+    //     To: data.Mail,
+    //     From: "s5901012630121@email.kmutnb.ac.th",
+    //     Subject: "Dear " + data.Name,
+    //     Body: "Following your contact, it is with great delight that we can work in cooperation with you. We are looking forward to carrying out bussiness together with you."
+    //   }).then(function (message) {
+    //     alert("Mail sent successfully!!")
+    //   });
+    // }
     else {
-      Email.send({
-        SecureToken: "4d812d49-2fd5-46b4-b4fd-81f7c2b6a42a",
-        To: data.Mail,
-        From: "s5901012630121@email.kmutnb.ac.th",
-        Subject: "Hi ",
-        Body: "Following your contact, it is with great delight that we can work in cooperation with you. We are looking forward to carrying out bussiness together with you."
-      }).then(function (message) {
-        alert("Mail sent successfully!!")
-      });
+      alert("Can not send Email. Please check or typing email")
+      // Email.send({
+      //   SecureToken: "4d812d49-2fd5-46b4-b4fd-81f7c2b6a42a",
+      //   To: data.Mail,
+      //   From: "s5901012630121@email.kmutnb.ac.th",
+      //   Subject: "Hi ",
+      //   Body: "Following your contact, it is with great delight that we can work in cooperation with you. We are looking forward to carrying out bussiness together with you."
+      // }).then(function (message) {
+      //   alert("Mail sent successfully!!")
+      // });
     }
   }
 }
+
+$('#cl_name').click(function () {
+  $('#fname').val("");
+});
+
+$('#cl_coname').click(function () {
+  $('#coname').val("");
+});
+
+$('#cl_pos').click(function () {
+  $('#pos').val("");
+});
+
+$('#cl_num').click(function () {
+  $('#num').val("");
+});
+
+$('#cl_addr').click(function () {
+  $('#add').val("");
+});
+
+$('#cl_mail').click(function () {
+  $('#mail').val("");
+});
+
+$('#cl_oth').click(function () {
+  $('#oth').val("");
+});
+
+function setData() {
+  let str = []
+  let countrow = $('#tabledata td').closest("tr").length;
+  let range = Array.from(Array(countrow).keys());
+  console.log(typeof countrow);
+  console.log(range);
+  for (let i in range){
+    if ($('#check' + i).is(":checked")) {
+      console.log(i);
+      console.log($('#tdid' + i).text());
+      str.push($('#tdid' + i).text());
+      // console.log(str)
+    }
+  }
+  console.log(str);
+  return str.join(" ");
+}
+
+$('#sub_name').click(function() {
+  $('#fname').prop('value', setData());
+});
+
+$('#sub_coname').click(function() {
+  $('#coname').prop('value', setData());
+});
+
+$('#sub_pos').click(function() {
+  $('#pos').prop('value', setData());
+});
+
+$('#sub_num').click(function() {
+  $('#num').prop('value', setData());
+});
+
+$('#sub_addr').click(function() {
+  $('#add').prop('value', setData());
+});
+
+$('#sub_mail').click(function() {
+  $('#mail').prop('value', setData());
+});
+
+$('#sub_oth').click(function() {
+  $('#oth').prop('value', setData());
+});
+
 

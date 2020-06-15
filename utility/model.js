@@ -6,12 +6,13 @@ class Model{
     _schema(){
         let schema = new mongoose.Schema({
             Name: String,
-            // Lastname: String,
+            CompanyName: String,
+            Position: String,
             Number: String,
             Address: String,
             Mail: String,
             Web: String,
-            Other: [],
+            Other: String,
             Date: { type: Date, default: Date.now }
         })
         return schema;

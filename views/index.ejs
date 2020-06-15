@@ -11,6 +11,7 @@
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
         integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.21/datatables.min.css"/>
     <link rel="stylesheet" href="/stylesheets/style.css" />
 </head>
 
@@ -81,27 +82,32 @@
 
         </div>
         <div class="row py-2">
+
             <div id="showdata" class="col-lg-6 mx-auto">
-
-
                 <label for="fname">Name:</label>
                 <input type="text" id="fname" name="fname">
                 <input id='sub_name' class="btn btn-success" type="submit" value="Submit">
                 <input id='cl_name' class="btn btn-secondary" type="submit" value="Clear">
                 <br><br>
 
-                <!-- <label for="lname">Surname:</label>
-                <input type="text" id="lname" name="lname">
-                <input id='sub_lname' class="btn btn-success" type="submit" value="Submit">
-                <input id='cl_lname' class="btn btn-secondary" type="submit" value="Clear">
-                <br><br> -->
+                <label for="coname">CO.Name:</label>
+                <input type="text" id="coname" name="coname">
+                <input id='sub_coname' class="btn btn-success" type="submit" value="Submit">
+                <input id='cl_coname' class="btn btn-secondary" type="submit" value="Clear">
+                <br><br>
 
+                <label for="pos">Position:</label>
+                <input type="text" id="pos" name="pos">
+                <input id='sub_pos' class="btn btn-success" type="submit" value="Submit">
+                <input id='cl_pos' class="btn btn-secondary" type="submit" value="Clear">
+                <br><br>
+                
                 <label for="Number">Number:</label>
                 <input type="text" id="num" name="number">
                 <input id='sub_num' class="btn btn-success" type="submit" value="Submit">
                 <input id='cl_num' class="btn btn-secondary" type="submit" value="Clear">
                 <br><br>
-
+                
                 <label for="Address">Address:</label>
                 <input type="text" id="add" name="address">
                 <input id='sub_addr' class="btn btn-success" type="submit" value="Submit">
@@ -125,7 +131,7 @@
 
             </div>
             <div id="table" class="col-lg-6 mx-auto">
-                <table class="table table-striped table-bordered" id='textdata'>
+                <table class="table table-striped table-bordered" id='tabledata'>
                     <thead>
                         <tr>
                             <th scope="col">#</th>
@@ -133,37 +139,14 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <th scope="row">
-                                <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input" id="check1">
-                                    <label class="custom-control-label" for="check1">1</label>
-                                </div>
-                            </th>
-                            <td>Mark</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">
-                                <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input" id="check2">
-                                    <label class="custom-control-label" for="check2">2</label>
-                                </div>
-                            </th>
-                            <td>Jacob</td>
-                        
-                        </tr>
-                        <tr>
-                            <th scope="row">
-                                <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input" id="check3">
-                                    <label class="custom-control-label" for="check3">3</label>
-                                </div>
-                            </th>
-                            <td>Larry</td>
-                           
-                        </tr>
                     </tbody>
                 </table>
+                <div id="data-container">
+                    <nav>
+                        <ul class="pagination"></ul>
+                    </nav>
+                </div>
+                
             </div>
         </div>
     </div>
@@ -176,6 +159,8 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
         integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous">
         </script>
+    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.21/datatables.min.js"></script>
+
 
     <script src="/javascripts/preview-alldata.js"></script>
     <script src="https://smtpjs.com/v3/smtp.js"></script>
