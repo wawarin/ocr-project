@@ -53,9 +53,6 @@ class Validiation {
                 this.stringname = str[0];
             }
         }
-        //  else {
-        //     console.log("No email for find name!!");
-        // }
     }
     nameValid() {
         let data = [];
@@ -95,7 +92,6 @@ class Validiation {
     webValid(word) {
         let urlformat = /(?:(?:https?|ftp|file):\/\/|www\.|ftp\.)(?:\([-A-Z0-9+&@#\/%=~_|$?!:,.]*\)|[-A-Z0-9+&@#\/%=~_|$?!:,.])*(?:\([-A-Z0-9+&@#\/%=~_|$?!:,.]*\)|[A-Z0-9+&@#\/%=~_|$])/igm;
         if (word.match(urlformat)) {
-            // console.log("this website: " + this.str[this.i]);
             this.collect.link = word;
         }
     }
