@@ -18,10 +18,10 @@ function readURL(input) {
   }
 }
 
+// This function for check about data from OCR result and mange to show data in input box
 function previewData(data) {
   if (data != null) {
     for (let [key, value] of Object.entries(data)) {
-      // console.log(`${key}: ${value}`);
       if ([key] == "name" && [value] != null) {
         if ([value] != 'undefined undefined') {
           $('#fname').prop('value', [value]);
@@ -77,17 +77,17 @@ function previewData(data) {
   $('#load').hide();
 }
 
-
+// Class for insert data to table in web ui
 class taBle {
   constructor(data) {
     this.test = data.split("\n");
     this.collectdata = [];
     this._tableData(this.test);
-    // console.log(this.collectdata);
     this._filterData();
     this._putData();
-    // this._insertDatatoInput();
   }
+
+  // The function of separating words with word groups.
   _tableData(data) {
     for (let i in data) {
       this._findnumber(data[i]);
@@ -97,6 +97,7 @@ class taBle {
     }
   }
 
+  // Function about find phone number and separate prefix
   _findnumber(word) {
     let formatnumber = /[+]?[\s./0-9]*[(]?[0-9]{1,4}[)]?[-\s./0-9]*/g;
     // let formatnumber = /^(([\+]{1}[0-9]{1,3}[\ ]{1}[0-9]{1,2}[\ ]{1}[0-9]{4}[\ ]{1}[0-9]{4})|([0]{1}[0-9]{1}[\ ]{1}[0-9]{4}[\ ]{1}[0-9]{4})|([0]{1}[0-9]{1}[\-]{1}[0-9]{4}[\-]{1}[0-9]{4})|([\(]{1}[0]{1}[0-9]{1}[\)]{1}[\ ]{1}[0-9]{4}([\ ]|[\-]){1}[0-9]{4})|([0-9]{4}([\ ]|[\-])?[0-9]{4})|([0]{1}[0-9]{3}[\ ]{1}[0-9]{3}[\ ]{1}[0-9]{3})|([0]{1}[0-9]{9})|([\(]{1}[0-9]{3}[\)]{1}[\ ]{1}[0-9]{3}[\-]{1}[0-9]{4})|([0-9]{3}([\/]|[\-]){1}[0-9]{3}[\-]{1}[0-9]{4})|([1]{1}[\-]?[0-9]{3}([\/]|[\-]){1}[0-9]{3}[\-]{1}[0-9]{4})|([1]{1}[0-9]{9}[0-9]?)|([0-9]{3}[\.]{1}[0-9]{3}[\.]{1}[0-9]{4})|([\(]{1}[0-9]{3}[\)]{1}[0-9]{3}([\.]|[\-]){1}[0-9]{4}(([\ ]?(x|ext|extension)?)([\ ]?[0-9]{3,4}))?)|([1]{1}[\(]{1}[0-9]{3}[\)]{1}[0-9]{3}([\-]){1}[0-9]{4})|([\+]{1}[1]{1}[\ ]{1}[0-9]{3}[\.]{1}[0-9]{3}[\-]{1}[0-9]{4})|([\+]{1}[1]{1}[\ ]?[\(]{1}[0-9]{3}[\)]{1}[0-9]{3}[\-]{1}[0-9]{4}))$/g;
@@ -113,6 +114,8 @@ class taBle {
       }
     }
   }
+
+  //  The function for filter data betaween collectdata and test for find remaining array
   _filterData() {
     let left_spitdata = [];
     if (this.collectdata != null || this.collectdata != []) {
@@ -127,12 +130,12 @@ class taBle {
           this.collectdata.push(left_spitdata[j][m]);
           this.collectdata = this.collectdata.filter(e => e != "");
         }
-        // this.test = this.test.filter(e => e != left_spitdata[j]);
       }
     }
   }
+  // The function for insert about data in collectdata array to table in html
   _putData() {
-    let num = 1;
+    let num = 1; // this variable for show the sequence label on checkbox
     if (this.collectdata != [] || this.collectdata != null) {
       for (let i in this.collectdata) {
         $('#tabledata').find('tbody').append(
@@ -147,10 +150,10 @@ class taBle {
           "</tr>"
         );
         num = num + 1;
-
       }
     }
   }
+  // The function for return data for use next
   sendData() {
     if (this.collectdata != null) {
       return this.collectdata;
@@ -163,10 +166,14 @@ $(function () {
     $('#alldata').hide();
     $('table').hide();
     $('#showdata').hide();
+
+    // show loading
     $('#load').show();
     $('#obj').show();
+
     readURL(input);
-    $('#tabledata').find('tbody').empty();
+
+    $('#tabledata').find('tbody').empty(); // clear data in table body
   });
 });
 
@@ -210,6 +217,7 @@ function showFileName(event) {
   });
 }
 
+// This class for format about data before send to frontend and save to the database
 class madeData {
   constructor() {
     this.data = {};
@@ -224,6 +232,7 @@ class madeData {
   _returnData() {
     return this.data
   }
+
   _nameData() {
     let name = $('#fname').val();
     if (name != null) {
@@ -282,6 +291,7 @@ class madeData {
   }
 }
 
+// Save to the database
 $('#submit').click(function () {
 
   let data = new madeData();
@@ -310,7 +320,7 @@ $('#submit').click(function () {
   });
 });
 
-
+//  Save to database and send email
 $('#subandsend').click(function () {
 
   let data = new madeData();
@@ -330,9 +340,7 @@ $('#subandsend').click(function () {
     processData: false,
     contentType: false,
     success: function () {
-      // console.log(data);
       emailSent(data._returnData());
-      // alert(data._returnData());
     },
     error: function (err) {
       console.log('error: ', err);
@@ -348,37 +356,20 @@ function emailSent(data) {
         To: data.Mail,
         From: "s5901012630121@email.kmutnb.ac.th",
         Subject: "Dear " + data.Name,
-        Body: "Dear " + data.Name + "\n" + " Following your contact, it is with great delight that we can work in cooperation with you. We are looking forward to carrying out bussiness together with you." + "\n" +  "Yours sincerely" + "\n" + "Warinthorn Rattanakarunjit"
+        Body: "Dear " + data.Name + " Following your contact, it is with great delight that we can work in cooperation with you. We are looking forward to carrying out bussiness together with you." + "Yours sincerely" + "Warinthorn Rattanakarunjit"
       }).then(function (message) {
         alert("Mail sent successfully!!")
       });
     }
-    // else if (data.Name != null) {
-    //   Email.send({
-    //     SecureToken: "4d812d49-2fd5-46b4-b4fd-81f7c2b6a42a",
-    //     To: data.Mail,
-    //     From: "s5901012630121@email.kmutnb.ac.th",
-    //     Subject: "Dear " + data.Name,
-    //     Body: "Following your contact, it is with great delight that we can work in cooperation with you. We are looking forward to carrying out bussiness together with you."
-    //   }).then(function (message) {
-    //     alert("Mail sent successfully!!")
-    //   });
-    // }
-    else {
-      alert("Can not send Email. Please check or typing email")
-      // Email.send({
-      //   SecureToken: "4d812d49-2fd5-46b4-b4fd-81f7c2b6a42a",
-      //   To: data.Mail,
-      //   From: "s5901012630121@email.kmutnb.ac.th",
-      //   Subject: "Hi ",
-      //   Body: "Following your contact, it is with great delight that we can work in cooperation with you. We are looking forward to carrying out bussiness together with you."
-      // }).then(function (message) {
-      //   alert("Mail sent successfully!!")
-      // });
-    }
+  } 
+  else {
+    alert("Can not send Email. Please check or typing email");
   }
 }
 
+/*==============
+= Clear button =
+================*/
 $('#cl_name').click(function () {
   $('#fname').val("");
 });
@@ -407,6 +398,7 @@ $('#cl_oth').click(function () {
   $('#oth').val("");
 });
 
+// The function for check checkbox values and get values from that cell in table
 function setData() {
   let str = []
   let countrow = $('#tabledata td').closest("tr").length;
@@ -418,13 +410,15 @@ function setData() {
       console.log(i);
       console.log($('#tdid' + i).text());
       str.push($('#tdid' + i).text());
-      // console.log(str)
     }
   }
   console.log(str);
   return str.join(" ");
 }
 
+/*==============
+= Submit button =
+================*/
 $('#sub_name').click(function() {
   $('#fname').prop('value', setData());
 });
@@ -452,5 +446,3 @@ $('#sub_mail').click(function() {
 $('#sub_oth').click(function() {
   $('#oth').prop('value', setData());
 });
-
-

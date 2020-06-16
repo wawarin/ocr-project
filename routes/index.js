@@ -5,7 +5,6 @@ let mongoose = require('mongoose');
 const createmodel = require("../utility/model.js");
 const connect_db = require("../utility/db.js");
 const extract = require("../utility/extrac-text.js");
-// const previewtext = require("../public/javascripts/preview-text.js")
 const { createWorker } = require('tesseract.js');
 let card = mongoose.model("card", createmodel);
 
@@ -41,7 +40,6 @@ router.get('/', function (req, res, next) {
 
 router.post('/test', upload.single("image"), function (req, res, next) {
   let image = "./public/images/" + req.file.originalname;
-  // console.log(image);
   const worker = createWorker({
     logger: m => console.log(m), // Add logger here
   });
@@ -52,17 +50,14 @@ router.post('/test', upload.single("image"), function (req, res, next) {
     await worker.initialize('eng+tha');
     const { data: { text } } = await worker.recognize(image);
     console.log(text);
-    // console.log(text.split("\n"));
     let valid = new extract.ext(text);
     console.log(valid.callAllfn());
     await worker.terminate();
-    // res.json({ message: "Upload Complete!!!" });
     res.json(valid.callAllfn());
   })();
 });
 
 router.post('/saved', function(req, res, next) {
-  // let card = mongoose.model("card", )
   console.log(req.body);
   var myData = new card(req.body);
   myData.save()
@@ -72,7 +67,6 @@ router.post('/saved', function(req, res, next) {
     .catch(err => {
       res.status(400).send("unable to save to database");
     });
-  // res.json({message: item}); 
 })
 
 

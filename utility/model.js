@@ -16,18 +16,6 @@ class Model{
             Date: { type: Date, default: Date.now }
         })
         return schema;
-        // const cardmodel = mongoose.model('BusinessCards', schema);
-        // return cardmodel;
     }
-    // matchdata(data){
-    //     if (data != null) {
-    //         for (let [key, value] of Object.entries(object1)) {
-    //             // console.log(`${key}: ${value}`);
-    //             if ([key] == "name" && [value] != null) {
-                    
-    //             }
-    //           }
-    //     }
-    // }
 }
 module.exports = new Model();
