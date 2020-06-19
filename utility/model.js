@@ -1,6 +1,9 @@
 let mongoose = require('mongoose');
+const moment = require('moment-timezone');
+
 class Model{
     constructor(){
+        this.dateThailand = moment.tz(Date.now(), "Asia/Bangkok");
         this._schema()
     }
     _schema(){
@@ -13,7 +16,7 @@ class Model{
             Mail: String,
             Web: String,
             Other: String,
-            Date: { type: Date, default: Date.now }
+            Date: { type: Date, default: this.dateThailand}
         })
         return schema;
     }

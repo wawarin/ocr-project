@@ -26,7 +26,7 @@ function previewData(data) {
         if ([value] != 'undefined undefined') {
           $('#fname').prop('value', [value]);
         } else {
-          $('#fname').prop('value', "please select or typing Name");
+          $('#fname').prop('value', "");
         }
 
       }
@@ -34,28 +34,28 @@ function previewData(data) {
         if ([value] != null) {
           $('#num').prop('value', [value]);
         } else {
-          $('#num').prop('value', 'please select or typing Phone number');
+          $('#num').prop('value', '');
         }
       }
       else if ([key] == "address") {
         if ([value] != null) {
           $('#add').prop('value', [value]);
         } else {
-          $('#add').prop('value', 'please select or typing Address');
+          $('#add').prop('value', '');
         }
       }
       else if ([key] == "email") {
         if ([value] != null) {
           $('#mail').prop('value', [value]);
         } else {
-          $('#mail').prop('value', 'please select or typing Email');
+          $('#mail').prop('value', '');
         }
       }
       else if ([key] == "other") {
         if ([value] != null) {
           $('#oth').prop('value', [value]);
         } else {
-          $('#oth').prop('value', 'please select or typing Other')
+          $('#oth').prop('value', '')
         }
       }
       else if ([key] == "alldata" && [value] != null) {
@@ -67,7 +67,7 @@ function previewData(data) {
       }
       else if ([key] == "ogdata" && [value] != null) {
         let table = new taBle([value][0]);
-        console.log(table);
+        // console.log(table);
       }
     }
   }
@@ -208,8 +208,6 @@ function showFileName(event) {
     contentType: false,
     success: function (data) {
       previewData(data);
-      // tableData();
-      // console.log(data);
     },
     error: function (err) {
       console.log('error: ', err);
@@ -295,12 +293,13 @@ class madeData {
 $('#submit').click(function () {
 
   let data = new madeData();
-  console.log(data._returnData());
+  let obj = data._returnData();
+  let toJSON = JSON.stringify(obj);
+  // console.log(JSON.stringify(data._returnData()));
 
   const formData = new FormData() // ข้อมูลเป็นไฟล์ เอาใส่ FormData แบบนี้ ปล.ไม่ต้องเป็น file ก็ส่งแบบนี้ได้
-  formData.append('data', data._returnData()) // เอาไฟล์ยัดใส่ FormData ใช้ชื่อ Field ว่า "image"
-
-
+  // formData.append('data', toJSON) // เอาไฟล์ยัดใส่ FormData ใช้ชื่อ Field ว่า "image"
+  formData.append('data', obj)
   // ปกติถ้าไม่ได้ส่ง file จะส่งเป็น json แบบนี้
   // const formData = { fileName: "Wa", message: "wawawa" } 
 
@@ -310,6 +309,9 @@ $('#submit').click(function () {
     data: formData,
     processData: false,
     contentType: false,
+    // contentType: "application/json; charset=UTF-8",
+    // contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+    // dataType: "json",
     success: function (data) {
       console.log(data);
       alert("Data saved!!!");
@@ -339,6 +341,8 @@ $('#subandsend').click(function () {
     data: formData,
     processData: false,
     contentType: false,
+    // contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+    // dataType: "json",
     success: function () {
       emailSent(data._returnData());
     },
@@ -349,7 +353,7 @@ $('#subandsend').click(function () {
 });
 
 function emailSent(data) {
-  if (data.Mail != null) {
+  if (data.Mail != null & data.Mail != "") {
     if (data.Name != null) {
       Email.send({
         SecureToken: "4d812d49-2fd5-46b4-b4fd-81f7c2b6a42a",

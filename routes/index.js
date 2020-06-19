@@ -1,12 +1,19 @@
 let express = require('express');
 let router = express.Router();
+// let bodyParser = require('body-parser');
 let multer = require('multer');
 let mongoose = require('mongoose');
 const createmodel = require("../utility/model.js");
 const connect_db = require("../utility/db.js");
 const extract = require("../utility/extrac-text.js");
 const { createWorker } = require('tesseract.js');
-let card = mongoose.model("card", createmodel);
+let card = mongoose.model("card", createmodel._schema());
+
+// create application/json parser
+// let jsonParser = bodyParser.json()
+
+// create application/x-www-form-urlencoded parser
+// let urlencodedParser = bodyParser.urlencoded({ extended: false })
 
 let diskstorage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -59,9 +66,10 @@ router.post('/test', upload.single("image"), function (req, res, next) {
 
 router.post('/saved', function(req, res, next) {
   console.log(req.body);
-  var myData = new card(req.body);
+  let myData = new card(req.body);
   myData.save()
     .then(item => {
+      // alert(req.body)
       res.send("item saved to database");
     })
     .catch(err => {
