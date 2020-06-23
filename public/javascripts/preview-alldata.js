@@ -294,24 +294,20 @@ $('#submit').click(function () {
 
   let data = new madeData();
   let obj = data._returnData();
-  let toJSON = JSON.stringify(obj);
-  // console.log(JSON.stringify(data._returnData()));
+  console.log(obj);
 
-  const formData = new FormData() // ข้อมูลเป็นไฟล์ เอาใส่ FormData แบบนี้ ปล.ไม่ต้องเป็น file ก็ส่งแบบนี้ได้
+  // const formData = new FormData() // ข้อมูลเป็นไฟล์ เอาใส่ FormData แบบนี้ ปล.ไม่ต้องเป็น file ก็ส่งแบบนี้ได้
   // formData.append('data', toJSON) // เอาไฟล์ยัดใส่ FormData ใช้ชื่อ Field ว่า "image"
-  formData.append('data', obj)
+  // formData.append('data', obj)
   // ปกติถ้าไม่ได้ส่ง file จะส่งเป็น json แบบนี้
   // const formData = { fileName: "Wa", message: "wawawa" } 
 
   $.ajax({
     url: '/saved',
     type: 'post',
-    data: formData,
+    data: JSON.stringify(obj),
     processData: false,
-    contentType: false,
-    // contentType: "application/json; charset=UTF-8",
-    // contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-    // dataType: "json",
+    contentType: "application/json",
     success: function (data) {
       console.log(data);
       alert("Data saved!!!");
@@ -327,9 +323,11 @@ $('#subandsend').click(function () {
 
   let data = new madeData();
   console.log(data._returnData());
+  let obj = data._returnData();
+  console.log(obj)
 
-  const formData = new FormData() // ข้อมูลเป็นไฟล์ เอาใส่ FormData แบบนี้ ปล.ไม่ต้องเป็น file ก็ส่งแบบนี้ได้
-  formData.append('data', data._returnData()) // เอาไฟล์ยัดใส่ FormData ใช้ชื่อ Field ว่า "image"
+  // const formData = new FormData() // ข้อมูลเป็นไฟล์ เอาใส่ FormData แบบนี้ ปล.ไม่ต้องเป็น file ก็ส่งแบบนี้ได้
+  // formData.append('data', data._returnData()) // เอาไฟล์ยัดใส่ FormData ใช้ชื่อ Field ว่า "image"
 
 
   // ปกติถ้าไม่ได้ส่ง file จะส่งเป็น json แบบนี้
@@ -338,13 +336,11 @@ $('#subandsend').click(function () {
   $.ajax({
     url: '/saved',
     type: 'post',
-    data: formData,
+    data: JSON.stringify(obj),
     processData: false,
-    contentType: false,
-    // contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-    // dataType: "json",
+    contentType: "application/json",
     success: function () {
-      emailSent(data._returnData());
+      emailSent(obj);
     },
     error: function (err) {
       console.log('error: ', err);
@@ -356,20 +352,18 @@ function emailSent(data) {
   if (data.Mail != null & data.Mail != "") {
     if (data.Name != null) {
       Email.send({
-        SecureToken: "4d812d49-2fd5-46b4-b4fd-81f7c2b6a42a",
+        SecureToken: "b5b2ae40-cf15-4e1d-9236-bcb61c3c8509",
         To: data.Mail,
-        From: "s5901012630121@email.kmutnb.ac.th",
+        From: "warinthorn.wr@gmail.com",
         Subject: "Dear " + data.Name,
-        Body: "Dear " + data.Name + " Following your contact, it is with great delight that we can work in cooperation with you. We are looking forward to carrying out bussiness together with you." + "Yours sincerely" + "Warinthorn Rattanakarunjit"
+        Body: "Dear " + data.Name + " Following your contact, it is with great delight that we can work in cooperation with you. We are looking forward to carrying out bussiness together with you. Yours sincerely Warinthorn Rattanakarunjit"
       }).then(function (message) {
         alert("Mail sent successfully!!")
       });
     }
   } 
-  else {
-    alert("Can not send Email. Please check or typing email");
-  }
 }
+
 
 /*==============
 = Clear button =
